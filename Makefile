@@ -245,7 +245,7 @@ minimum_required: update-system
     	printf "\r$(CHECK_EMOJI)$${message}$(COLOR_LIGHTBLUE)...$(COLOR_RESET) $(COLOR_GREEN)$(COLOR_BOLD)Done$(COLOR_RESET)\n"; \
 	fi
 
-install-gcloud:
+install-gcloud: minimum_required
 	@if command -v gcloud $(QUIET); then \
 		echo -n "$(SUCCESS_EMOJI) Google Cloud SDK/CLI already installed $(DIRECTION_EMOJI) "; \
 		gcloud --version | head -n 1; \
@@ -270,7 +270,7 @@ install-gcloud:
         printf "\r$(CHECK_EMOJI)$${message}$(COLOR_LIGHTBLUE)...$(COLOR_RESET) $(COLOR_GREEN)$(COLOR_BOLD)Done$(COLOR_RESET)\n"; \
 	fi
 
-install-aws:
+install-aws: minimum_required
 	@if command -v aws $(QUIET); then \
 		echo -n "$(SUCCESS_EMOJI) AWS SDK/CLI already installed $(DIRECTION_EMOJI) aws/cli "; \
 		aws --version | cut -d' ' -f1 | cut -d'/' -f2; \
@@ -299,7 +299,7 @@ install-aws:
         printf "\r$(CHECK_EMOJI)$${message}$(COLOR_LIGHTBLUE)...$(COLOR_RESET) $(COLOR_GREEN)$(COLOR_BOLD)Done$(COLOR_RESET)\n"; \
 	fi
 
-install-azure:
+install-azure: minimum_required
 	@if command -v az $(QUIET); then \
 		echo -n "$(SUCCESS_EMOJI) Azure SDK/CLI already installed $(DIRECTION_EMOJI) "; \
 		az --version | awk '/azure-cli/ {print $2}' | tr -s ' '; \
@@ -322,7 +322,7 @@ install-azure:
         printf "\r$(CHECK_EMOJI)$${message}$(COLOR_LIGHTBLUE)...$(COLOR_RESET) $(COLOR_GREEN)$(COLOR_BOLD)Done$(COLOR_RESET)\n"; \
 	fi
     
-install-oci:
+install-oci: minimum_required
 	@if command -v oci $(QUIET) || [ -f ~/.local/bin/oci ] $(QUIET); then \
 		echo -n "$(SUCCESS_EMOJI) Oracle SDK/CLI already installed $(DIRECTION_EMOJI) "; \
 		~/.local/bin/oci --version; \
@@ -357,7 +357,7 @@ install-oci:
 		echo -e "$(DOT_EMOJI) Restart your shell or type $(COLOR_YELLOW)source ~/.bashrc$(COLOR_RESET) to enable OCI."; \
 	fi
 
-install-dojo:
+install-dojo: minimum_required
 	@if command -v dojo $(QUIET); then \
 		echo -n "$(SUCCESS_EMOJI) Dojo already installed $(DIRECTION_EMOJI) "; \
 		dojo --version | head -n 1; \
@@ -385,7 +385,7 @@ install-dojo:
         printf "\r$(CHECK_EMOJI)$${message}$(COLOR_LIGHTBLUE)...$(COLOR_RESET) $(COLOR_GREEN)$(COLOR_BOLD)Done$(COLOR_RESET)\n"; \
 	fi
 
-install-gh:
+install-gh: minimum_required
 	@if command -v gh $(QUIET); then \
 		echo -n "$(SUCCESS_EMOJI) GH GitHub CLI already installed $(DIRECTION_EMOJI) "; \
 		gh --version | head -n 1; \
@@ -408,7 +408,7 @@ install-gh:
         printf "\r$(CHECK_EMOJI)$${message}$(COLOR_LIGHTBLUE)...$(COLOR_RESET) $(COLOR_GREEN)$(COLOR_BOLD)Done$(COLOR_RESET)\n"; \
 	fi
 
-install-nvm:
+install-nvm: minimum_required
 	@if [ -s "$$HOME/.nvm/nvm.sh" ] || [ -s "$$NVM_DIR/nvm.sh" ]; then \
 		echo "$(SUCCESS_EMOJI) NVM already installed.; \
         echo -e "$(DOT_EMOJI) Restart your shell or type $(COLOR_YELLOW)source ~/.bashrc$(COLOR_RESET) to enable NVM."; \
@@ -445,7 +445,7 @@ install-nvm:
 		echo -e "$(DOT_EMOJI) Run $(COLOR_YELLOW)nvm install <version_number_only>$(COLOR_RESET) to install or upgrade node version."; \
 	fi
 
-install-ansible: .ansible.cfg .ansible-hosts
+install-ansible: minimum_required .ansible.cfg .ansible-hosts
 	@if command -v ansible $(QUIET); then \
 		echo -n "$(SUCCESS_EMOJI) Ansible already installed $(DIRECTION_EMOJI) "; \
 		ansible --version | head -n 1; \
@@ -504,7 +504,7 @@ ansible-test: ansible-test.yml
 	@rm -f ansible-test.yml
 	@echo -e "$(SUCCESS_EMOJI) Ansible test completed successfully!"
 
-install-terraform:
+install-terraform: minimum_required
 	@if command -v terraform $(QUIET); then \
 		echo -n "$(SUCCESS_EMOJI) Terraform already installed $(DIRECTION_EMOJI) "; \
 		terraform -v | head -n 1; \
