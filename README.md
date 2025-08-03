@@ -2,7 +2,7 @@ Sharing a DevOps toolkit (Debian-based) created with GNU Make that I use to set 
 
 I'm providing it here as an example of useful tools.<br>
 
-Feel free to study it, use it, modify it, remove or add whatever you want.
+Feel free to study it, use it, modify, remove or add whatever you want.
 
 <i>P.S.: Before using it, ensure your system has gnu make installed.</id>
 
