@@ -410,10 +410,10 @@ install-gh: minimum_required
 
 install-nvm: minimum_required
 	@if [ -s "$$HOME/.nvm/nvm.sh" ] || [ -s "$$NVM_DIR/nvm.sh" ]; then \
-		echo "$(SUCCESS_EMOJI) NVM already installed.; \
+		echo "$(SUCCESS_EMOJI) NVM already installed." ; \
         echo -e "$(DOT_EMOJI) Restart your shell or type $(COLOR_YELLOW)source ~/.bashrc$(COLOR_RESET) to enable NVM."; \
 		echo -e "$(DOT_EMOJI) Type $(COLOR_YELLOW)nvm ls-remote$(COLOR_RESET) to see the full list of node versions."; \
-		echo -e "$(DOT_EMOJI) Run $(COLOR_YELLOW)nvm install <version_number_only>$(COLOR_RESET) to install or upgrade node version."; \
+		echo -e "$(DOT_EMOJI) Run $(COLOR_YELLOW)nvm install $(COLOR_GREEN)<version_number_only>$(COLOR_RESET) to install or upgrade node version."; \
 	else \
         spinner_func() { \
             i=0; \
