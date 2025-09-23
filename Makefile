@@ -90,9 +90,6 @@ DOWNLOADING_EMOJI = 📥
 all: minimum_required update-system install-aws install-azure install-gcloud install-oci install-terraform install-dojo install-gh \
     install-ansible install-nvm
 
-# My personal targets
-# votc: minimum_required update-system install-aws install-terraform install-gh install-ansible install-nvm
-
 # Utility Functions
 define log_info
 	@echo -e "$(INFO_EMOJI) $(COLOR_INFO)$(1)$(COLOR_RESET)"
