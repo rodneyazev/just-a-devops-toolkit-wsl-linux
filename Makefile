@@ -238,7 +238,7 @@ minimum_required: update-system
 				sleep 0.2; \
         	done; \
     	}; \
-    	(sudo apt install curl wget make unzip apt-transport-https ca-certificates gnupg software-properties-common -y $(QUIET)) & \
+    	(sudo apt install curl wget make unzip ssh git apt-transport-https ca-certificates gnupg software-properties-common -y $(QUIET)) & \
     	CMD_PID=$$!; \
     	spinner_func $$CMD_PID; \
     	wait $$CMD_PID; \
@@ -532,7 +532,7 @@ install-terraform: minimum_required
         printf "\r$(CHECK_EMOJI)$${message}$(COLOR_LIGHTBLUE)...$(COLOR_RESET) $(COLOR_GREEN)$(COLOR_BOLD)Done$(COLOR_RESET)\n"; \
 	fi
 
-ssh-key-config:
+ssh-key-config: minimum_required
 	@echo -e "$(COLOR_LIGHTBLUE)$(KEY_EMOJI) Generating SSH key...$(COLOR_RESET)"
 	@if [ ! -f $(SSH_KEY_PATH) ]; then \
 		echo -e "$(COLOR_YELLOW)Enter your email for SSH key: $(COLOR_RESET)\c"; \
@@ -545,7 +545,7 @@ ssh-key-config:
 		echo -e "$(COLOR_YELLOW)$(INFO_EMOJI) SSH key already exists at $(SSH_KEY_PATH)$(COLOR_RESET)"; \
 	fi
 
-gh-login-config:
+gh-login-config: 
 	@echo -e "$(COLOR_LIGHTBLUE)$(PADLOCK_EMOJI) Logging into GitHub...$(COLOR_RESET)"; \
 	gh auth login --web -h github.com | grep 'user code' | awk '{print $$NF}'; \
 	gh auth status
