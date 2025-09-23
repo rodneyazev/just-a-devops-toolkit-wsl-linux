@@ -545,7 +545,7 @@ ssh-key-config: minimum_required
 		echo -e "$(COLOR_YELLOW)$(INFO_EMOJI) SSH key already exists at $(SSH_KEY_PATH)$(COLOR_RESET)"; \
 	fi
 
-gh-login-config: 
+gh-login-config: minimum_required
 	@echo -e "$(COLOR_LIGHTBLUE)$(PADLOCK_EMOJI) Logging into GitHub...$(COLOR_RESET)"; \
 	gh auth login --web -h github.com | grep 'user code' | awk '{print $$NF}'; \
 	gh auth status
