@@ -221,7 +221,8 @@ else
 endif
 
 minimum_required: update-system
-	@if command -v wget $(QUIET); then \
+	@if command -v curl >/dev/null 2>&1 && command -v wget >/dev/null 2>&1 &&  command -v unzip >/dev/null 2>&1 && \
+	   command -v git >/dev/null 2>&1 && dpkg -l ca-certificates >/dev/null 2>&1; then \
 		echo -e "$(SUCCESS_EMOJI)$(COLOR_DONE) Minimum Required Packages already installed.$(COLOR_RESET)"; \
 	else \
 		message=" Installing Minimum Required Packages "; \
@@ -235,7 +236,7 @@ minimum_required: update-system
 				sleep 0.2; \
         	done; \
     	}; \
-    	(sudo apt install curl wget make unzip ssh git apt-transport-https ca-certificates gnupg software-properties-common -y $(QUIET)) & \
+    	(sudo apt install curl wget make unzip ssh git gpg apt-transport-https ca-certificates gnupg -y $(QUIET)) & \
     	CMD_PID=$$!; \
     	spinner_func $$CMD_PID; \
     	wait $$CMD_PID; \
@@ -288,7 +289,7 @@ install-aws: minimum_required
 		    curl $(CURL_QUIET) -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" $(QUIET); \
 		    unzip -q awscliv2.zip $(QUIET); \
 		    sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update $(QUIET); \
-		    rm -rf awscliv2.zip aws \
+		    rm -rf awscliv2.zip aws; \
 		) & \
         CMD_PID=$$!; \
         spinner_func $$CMD_PID; \
