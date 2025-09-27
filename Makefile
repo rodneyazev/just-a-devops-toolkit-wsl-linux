@@ -221,8 +221,10 @@ else
 endif
 
 minimum_required: update-system
-	@if command -v curl >/dev/null 2>&1 && command -v wget >/dev/null 2>&1 &&  command -v unzip >/dev/null 2>&1 && \
-	   command -v git >/dev/null 2>&1 && dpkg -l ca-certificates >/dev/null 2>&1; then \
+	@if command -v curl >/dev/null 2>&1 && \
+	    command -v wget >/dev/null 2>&1 &&  \
+		command -v unzip >/dev/null 2>&1 && \
+	    command -v git >/dev/null 2>&1 && dpkg -l ca-certificates >/dev/null 2>&1; then \
 		echo -e "$(SUCCESS_EMOJI)$(COLOR_DONE) Minimum Required Packages already installed.$(COLOR_RESET)"; \
 	else \
 		message=" Installing Minimum Required Packages "; \
