@@ -82,13 +82,13 @@ DOWNLOADING_EMOJI = 📥
 
 # Targets
 .PHONY: all minimum_required update-system install-gcloud install-aws install-azure install-oci install-terraform install-dojo install-gh \
-        install-ansible install-nvm ansible-test \
+        install-ansible install-nvm install-copilot ansible-test \
 		ssh-key-config gh-login-config \
         help banner show-config check-prereqs clean
 
 # Default targets
 all: minimum_required update-system install-aws install-azure install-gcloud install-oci install-terraform install-dojo install-gh \
-    install-ansible install-nvm
+    install-ansible install-nvm install-copilot
 
 # Utility Functions
 define log_info
@@ -178,6 +178,7 @@ help: banner
 	@echo "     install-gh          - Install GH Github CLI"
 	@echo "     install-ansible     - Install Ansible"
 	@echo "     install-nvm         - Install NVM (Node Version Manager)"
+	@echo "     install-copilot     - Install Copilot CLI"
 	@echo "     ansible-test        - Run Ansible test playbook"
 	@echo "     ssh-key-config      - Generate SSH key for GitHub/GitLab"
 	@echo "     gh-login-config     - Configure GH GitHub CLI login"
@@ -443,6 +444,34 @@ install-nvm: minimum_required
         echo -e "$(DOT_EMOJI) Restart your shell or type $(COLOR_YELLOW)source ~/.bashrc$(COLOR_RESET) to enable NVM."; \
 		echo -e "$(DOT_EMOJI) Type $(COLOR_YELLOW)nvm ls-remote$(COLOR_RESET) to see the full list of node versions."; \
 		echo -e "$(DOT_EMOJI) Run $(COLOR_YELLOW)nvm install <version_number_only>$(COLOR_RESET) to install or upgrade node version."; \
+	fi
+
+install-copilot: minimum_required
+	@if command -v copilot $(QUIET); then \
+		echo -n "$(SUCCESS_EMOJI) Copilot already installed $(DIRECTION_EMOJI) "; \
+		copilot --version | head -n 1; \
+	else \
+        spinner_func() { \
+            i=0; \
+            local spinner=("⠋" "⠙" "⠹" "⠸" "⠼" "⠴" "⠦" "⠧" "⠇" "⠏"); \
+            local dots=(".  " ".  " ".. " ".. " "..." "..."); \
+            message=" Installing Copilot "; \
+            while kill -0 $$1 2>/dev/null; do \
+            printf "\r\033[1;34m%s\033[0m %s\033[1;34m%s\033[0m" "$${spinner[i % $${#spinner[@]}]}" "$$message" "$${dots[i % $${#dots[@]}]}"; \
+                i=$$((i+1)); \
+				sleep 0.2; \
+            done; \
+        }; \
+        (   \
+			sudo apt update $(QUIET); \
+            curl -Lo copilot https://github.com/aws/copilot-cli/releases/latest/download/copilot-linux $(QUIET); \
+			chmod +x copilot; \
+			sudo mv copilot /usr/local/bin/copilot $(QUIET) \
+        ) & \
+        CMD_PID=$$!; \
+        spinner_func $$CMD_PID; \
+        wait $$CMD_PID; \
+        printf "\r$(CHECK_EMOJI)$${message}$(COLOR_LIGHTBLUE)...$(COLOR_RESET) $(COLOR_GREEN)$(COLOR_BOLD)Done$(COLOR_RESET)\n"; \
 	fi
 
 install-ansible: minimum_required .ansible.cfg .ansible-hosts
